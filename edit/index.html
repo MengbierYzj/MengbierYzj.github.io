@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' https: http: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>编辑主页 · MengbierYzj</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../style.css">
+  <script type="module" src="editor.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap topbar">
+      <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">M</span><span>学术主页</span></a>
+      <a href="../">返回主页</a>
+    </div>
+  </header>
+  <main class="wrap editor">
+    <div class="editor-heading">
+      <h1>编辑学术主页</h1>
+      <p>编辑资料后可预览草稿，或发布到 GitHub Pages。</p>
+    </div>
+    <form id="editor" autocomplete="off">
+      <fieldset id="editor-fields" disabled>
+        <section class="panel" aria-labelledby="profile-heading">
+          <h2 id="profile-heading">个人信息</h2>
+          <div id="profile-fields" class="fields">
+            <div class="avatar-tools wide">
+              <img id="avatar-preview" alt="头像预览" width="64" height="64" hidden>
+              <label class="field">上传头像<input type="file" id="avatar-file" accept="image/jpeg,image/png,image/webp"></label>
+              <button type="button" id="clear-avatar" hidden>移除上传的头像</button>
+            </div>
+          </div>
+        </section>
+        <section class="panel" aria-labelledby="education-heading">
+          <div class="panel-head"><h2 id="education-heading">教育经历</h2><button type="button" data-add="education">添加经历</button></div>
+          <div id="education"></div>
+        </section>
+        <section class="panel" aria-labelledby="publications-heading">
+          <div class="panel-head"><h2 id="publications-heading">发表论文</h2><button type="button" data-add="publications">添加论文</button></div>
+          <div id="publications"></div>
+        </section>
+      </fieldset>
+      <section class="panel" aria-labelledby="publish-heading">
+        <h2 id="publish-heading">保存与发布</h2>
+        <label class="field" for="token">
+          GitHub 访问令牌
+          <input type="password" id="token" placeholder="发布时填写" autocomplete="off" spellcheck="false">
+          <small>创建仅限本站仓库、具有 Contents 读写权限的细粒度令牌。令牌仅用于当次发布。<a href="https://github.com/settings/personal-access-tokens/new?name=Academic%20Homepage&amp;target_name=MengbierYzj&amp;contents=write" target="_blank" rel="noopener noreferrer">创建令牌</a></small>
+        </label>
+        <div class="actions">
+          <button type="button" id="preview" disabled>保存草稿并预览</button>
+          <button type="submit" class="primary" id="publish" disabled>发布到 GitHub</button>
+          <button type="button" id="reload" disabled>加载 GitHub 最新版</button>
+        </div>
+        <p id="status" role="status" aria-live="polite">正在读取资料…</p>
+      </section>
+    </form>
+  </main>
+</body>
+</html>
