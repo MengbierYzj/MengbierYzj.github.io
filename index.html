@@ -7,60 +7,66 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>MengbierYzj · 学术主页</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
   <script type="module" src="home.js"></script>
 </head>
-<body>
+<body id="top">
   <a class="skip" href="#main">跳至正文</a>
-  <header class="site-header">
-    <div class="wrap topbar">
-      <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">M</span><span>学术主页</span></a>
-      <nav aria-label="站内导航">
-        <a href="#about">个人简介</a><a href="#education">教育经历</a><a href="#publications">发表论文</a>
+  <div class="site-frame">
+    <header class="site-header">
+      <div class="masthead">
+        <a class="brand" href="./">学术个人主页</a>
+        <span class="brand-caption" lang="en">Academic Homepage</span>
+      </div>
+      <nav class="site-nav" aria-label="站内导航">
+        <a href="./" aria-current="page">首页</a><a href="#about">个人简介</a><a href="#education">教育经历</a><a href="#publications">发表论文</a>
       </nav>
-    </div>
-  </header>
-  <main id="main" class="wrap home">
-    <div id="preview-note" class="notice" hidden>当前显示本地草稿。<a href="./">查看公开主页</a></div>
-    <div class="hero">
-      <div class="hero-inner">
-        <div class="portrait">
-          <span id="initials" aria-hidden="true">M</span>
-          <img id="avatar" src="https://avatars.githubusercontent.com/u/43168173?v=4" width="116" height="116" alt="MengbierYzj 的头像">
+    </header>
+    <main id="main" class="home">
+      <div id="preview-note" class="notice" hidden>当前显示本地草稿。<a href="./">查看公开主页</a></div>
+      <p id="load-message" role="status" hidden></p>
+      <div class="home-layout">
+        <div class="profile">
+          <div class="profile-label">个人资料</div>
+          <div class="profile-body">
+            <div class="portrait">
+              <span id="initials" aria-hidden="true">M</span>
+              <img id="avatar" src="https://avatars.githubusercontent.com/u/43168173?v=4" width="140" height="140" alt="MengbierYzj 的头像">
+            </div>
+            <h1 id="name">MengbierYzj</h1>
+            <p id="affiliation" hidden></p>
+            <div id="contacts" class="links"><a href="https://github.com/MengbierYzj">GitHub</a></div>
+          </div>
         </div>
-        <div class="identity">
-          <p class="kicker">ACADEMIC PROFILE</p>
-          <h1 id="name">MengbierYzj</h1>
-          <p id="affiliation" hidden></p>
-          <div id="contacts" class="links"><a href="https://github.com/MengbierYzj">GitHub</a></div>
+        <div class="main-column">
+          <section id="about" class="content-section" aria-labelledby="about-heading">
+            <div class="section-title"><h2 id="about-heading">个人简介</h2><span lang="en">About</span></div>
+            <div class="section-body">
+              <p id="bio" class="bio empty">个人简介待补充。</p>
+              <div id="research" hidden><h3>研究方向</h3><ul id="topics" class="topics"></ul></div>
+            </div>
+          </section>
+          <section id="education" class="content-section" aria-labelledby="education-heading">
+            <div class="section-title"><h2 id="education-heading">教育经历</h2><span lang="en">Education</span></div>
+            <div id="education-list" class="section-body"><p class="empty">教育经历待补充。</p></div>
+          </section>
+          <section id="publications" class="content-section" aria-labelledby="publications-heading">
+            <div class="section-title"><h2 id="publications-heading">发表论文</h2><span lang="en">Publications</span></div>
+            <div class="section-body">
+              <div id="publication-tools" class="publication-tools" hidden>
+                <label for="publication-search">筛选论文</label>
+                <input id="publication-search" type="search" placeholder="搜索标题、作者、期刊或年份">
+              </div>
+              <div id="publication-list"><p class="empty">发表论文待补充。</p></div>
+            </div>
+          </section>
         </div>
       </div>
-    </div>
-    <p id="load-message" role="status" hidden></p>
-    <section id="about" class="content-section" aria-labelledby="about-heading">
-      <div class="section-title"><h2 id="about-heading">个人简介</h2><span>About</span></div>
-      <div class="section-body">
-        <p id="bio" class="bio empty">个人简介待补充。</p>
-        <div id="research" hidden><h3>研究方向</h3><ul id="topics" class="topics"></ul></div>
-      </div>
-    </section>
-    <section id="education" class="content-section" aria-labelledby="education-heading">
-      <div class="section-title"><h2 id="education-heading">教育经历</h2><span>Education</span></div>
-      <div id="education-list" class="section-body"><p class="empty">教育经历待补充。</p></div>
-    </section>
-    <section id="publications" class="content-section" aria-labelledby="publications-heading">
-      <div class="section-title"><h2 id="publications-heading">发表论文</h2><span>Publications</span></div>
-      <div class="section-body">
-        <div id="publication-tools" class="publication-tools" hidden>
-          <label for="publication-search">筛选论文</label>
-          <input id="publication-search" type="search" placeholder="搜索标题、作者、期刊或年份">
-        </div>
-        <div id="publication-list"><p class="empty">发表论文待补充。</p></div>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer"><div class="wrap footer-inner">
-    <span id="footer-name">MengbierYzj</span><a href="edit/">编辑主页</a>
-  </div></footer>
+    </main>
+    <footer class="site-footer">
+      <span>© <span id="footer-name">MengbierYzj</span></span>
+      <div class="footer-links"><a href="#top">返回顶部</a><a href="edit/">编辑主页</a></div>
+    </footer>
+  </div>
 </body>
 </html>
