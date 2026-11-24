@@ -7,32 +7,32 @@ export const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/co
 export const maxContentBytes = 900_000;
 
 export const profileFields = [
-  ["name", "姓名或公开署名", "text", true, 100],
-  ["role", "身份或职称", "text", false, 120],
-  ["institution", "所在机构", "text", false, 160],
-  ["email", "公开邮箱", "email", false, 254],
-  ["github", "GitHub 链接", "url", false, 500],
-  ["scholar", "Google Scholar 链接", "url", false, 500],
-  ["orcid", "ORCID 链接", "url", false, 500],
-  ["avatar", "头像链接", "url", false, 1000],
-  ["interests", "研究方向（每行一项）", "textarea", false, 800],
-  ["bio", "个人简介", "textarea", false, 5000]
+  ["name", "Display name", "text", true, 100],
+  ["role", "Position or title", "text", false, 120],
+  ["institution", "Institution", "text", false, 160],
+  ["email", "Public email address", "email", false, 254],
+  ["github", "GitHub URL", "url", false, 500],
+  ["scholar", "Google Scholar URL", "url", false, 500],
+  ["orcid", "ORCID URL", "url", false, 500],
+  ["avatar", "Profile photo URL", "url", false, 1000],
+  ["interests", "Research interests (one per line)", "textarea", false, 800],
+  ["bio", "Biography", "textarea", false, 5000]
 ];
 
 export const entryFields = {
   education: [
-    ["school", "学校", "text", true, 160],
-    ["degree", "学位", "text", false, 100],
-    ["field", "专业", "text", false, 160],
-    ["period", "起止时间", "text", false, 80],
-    ["details", "补充说明", "textarea", false, 1500]
+    ["school", "School or university", "text", true, 160],
+    ["degree", "Degree", "text", false, 100],
+    ["field", "Field of study", "text", false, 160],
+    ["period", "Dates attended", "text", false, 80],
+    ["details", "Additional details", "textarea", false, 1500]
   ],
   publications: [
-    ["title", "论文标题", "text", true, 500],
-    ["authors", "作者（按署名顺序）", "text", false, 800],
-    ["venue", "期刊或会议", "text", false, 300],
-    ["year", "年份", "text", false, 4],
-    ["url", "论文链接或 DOI 链接", "url", false, 1000]
+    ["title", "Publication title", "text", true, 500],
+    ["authors", "Authors (in publication order)", "text", false, 800],
+    ["venue", "Journal or conference", "text", false, 300],
+    ["year", "Year", "text", false, 4],
+    ["url", "Publication or DOI URL", "url", false, 1000]
   ]
 };
 
@@ -57,7 +57,7 @@ export function readDraft() {
 
 export async function requestContent(url) {
   const response = await fetch(url, { cache: "no-store" });
-  if (!response.ok) throw new Error("无法读取主页内容。");
+  if (!response.ok) throw new Error("Could not load the homepage content.");
   return response.json();
 }
 

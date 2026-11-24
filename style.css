@@ -53,7 +53,6 @@ input, textarea, button { font: inherit; }
 }
 .brand:hover { text-decoration: underline; }
 .brand:focus-visible { outline-color: #fff; }
-.brand-caption { margin-top: .2rem; color: #e1ebf5; font: italic 1.125rem Georgia, "Times New Roman", serif; }
 .site-nav {
   display: flex;
   flex-wrap: wrap;
@@ -131,9 +130,7 @@ h1 { font: bold 1.75rem/1.2 Georgia, "Songti SC", SimSun, serif; color: var(--na
   padding: .32rem .65rem;
   color: var(--navy);
 }
-.section-title { display: flex; flex-wrap: wrap; gap: .1rem .55rem; align-items: baseline; }
 .section-title h2, .editor h2 { font-size: 1.0625rem; line-height: 1.4; }
-.section-title span { color: #495d71; font: italic .9375rem Georgia, "Times New Roman", serif; }
 .section-body {
   min-width: 0;
   padding: .8rem .65rem;

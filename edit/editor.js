@@ -1,7 +1,7 @@
 import {
   apiUrl, avatarLink, branch, contentUrl, draftKey, element, entryFields,
   maxContentBytes, profileFields, readDraft, safeLink
-} from "../data.js";
+} from "../data.js?v=3";
 
 const byId = (id) => document.getElementById(id);
 const form = byId("editor");
@@ -9,7 +9,7 @@ const fieldset = byId("editor-fields");
 const tokenInput = byId("token");
 const profile = {};
 const encoder = new TextEncoder();
-const labels = { education: "教育经历", publications: "论文" };
+const labels = { education: "Education entry", publications: "Publication" };
 let baseSha;
 let avatarData = "";
 let dirty = false;
@@ -35,7 +35,7 @@ function createField([key, label, type, required, maxLength], value = "") {
   }
   if (type === "url") {
     input.pattern = "https?://.+";
-    input.title = "请输入以 https:// 或 http:// 开头的网址";
+    input.title = "Enter a URL starting with https:// or http://.";
   }
   input.dataset.key = key;
   input.required = required;
@@ -61,9 +61,9 @@ function initProfile() {
 function addRow(section, values = {}) {
   const card = element("div", "", "row-card");
   const heading = element("div", "", "row-head");
-  const remove = element("button", "移除", "remove");
+  const remove = element("button", "Remove", "remove");
   remove.type = "button";
-  remove.setAttribute("aria-label", `移除这项${labels[section]}`);
+  remove.setAttribute("aria-label", `Remove this ${labels[section].toLowerCase()}`);
   remove.addEventListener("click", () => {
     card.remove();
     dirty = true;
@@ -107,8 +107,8 @@ function fill(data) {
 
 function fieldValue(input) {
   const value = input.value.trim();
-  if (input.required && !value) throw new Error(`请填写「${input.labels[0].firstChild.textContent}」。`);
-  if (value && input.type === "url" && !safeLink(value)) throw new Error("请填写有效的网址。");
+  if (input.required && !value) throw new Error(`Enter a value for "${input.labels[0].firstChild.textContent}".`);
+  if (value && input.type === "url" && !safeLink(value)) throw new Error("Enter a valid URL.");
   return value;
 }
 
@@ -136,7 +136,7 @@ function saveDraft(data) {
 
 async function localContent() {
   const response = await fetch(contentUrl, { cache: "no-store" });
-  if (!response.ok) throw new Error("无法读取主页资料。");
+  if (!response.ok) throw new Error("Could not load the homepage content.");
   const bytes = new Uint8Array(await response.arrayBuffer());
   const prefix = encoder.encode(`blob ${bytes.length}\0`);
   const gitBlob = new Uint8Array(prefix.length + bytes.length);
@@ -174,17 +174,17 @@ async function github({ token, body } = {}) {
       redirect: "error"
     });
   } catch {
-    throw new Error("无法连接 GitHub，请检查网络后重试。");
+    throw new Error("Could not connect to GitHub. Check your connection and try again.");
   }
   if (!response.ok) {
     const messages = {
-      401: "GitHub 令牌无效或已过期。",
-      403: "GitHub 拒绝请求。请检查令牌的仓库范围、Contents 权限或稍后重试。",
-      404: "GitHub 无法访问该文件。请确认令牌授权了本站仓库。",
-      409: "GitHub 已有其他更新。请加载 GitHub 最新版后重新编辑。",
-      422: "GitHub 拒绝了提交。请加载 GitHub 最新版，并检查分支权限。"
+      401: "Your GitHub token is invalid or has expired.",
+      403: "GitHub denied the request. Check which repository the token can access and whether it has Contents permission, or try again later.",
+      404: "GitHub could not access the file. Check that the token grants access to this repository.",
+      409: "The content changed on GitHub. Load the latest version before editing again.",
+      422: "GitHub rejected the commit. Load the latest version and check the branch permissions."
     };
-    throw new Error(messages[response.status] || `GitHub 请求失败（${response.status}）。`);
+    throw new Error(messages[response.status] || `GitHub request failed (${response.status}).`);
   }
   return response.json();
 }
@@ -206,16 +206,16 @@ async function load() {
     if (draft?.data && draft.baseSha) {
       fill(draft.data);
       baseSha = draft.baseSha;
-      status("已载入此浏览器中的草稿。");
+      status("Loaded the draft saved in this browser.");
     } else {
       const { data, sha } = await remoteContent().catch(localContent);
       fill(data);
       baseSha = sha;
-      status("已载入主页资料。");
+      status("Homepage content loaded.");
     }
     controls(false);
   } catch (error) {
-    status(error.message || "无法读取主页资料，请刷新后重试。", true);
+    status(error.message || "Could not load the homepage content. Refresh the page to try again.", true);
   }
 }
 
@@ -251,7 +251,7 @@ byId("avatar-file").addEventListener("change", async (event) => {
   controls(true);
   try {
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 12_000_000) {
-      throw new Error("请选择 12 MB 以内的 JPEG、PNG 或 WebP 图片。");
+      throw new Error("Choose a JPEG, PNG, or WebP image up to 12 MB.");
     }
     const bitmap = await createImageBitmap(file);
     try {
@@ -267,7 +267,7 @@ byId("avatar-file").addEventListener("change", async (event) => {
     profile.avatar.value = "";
     updateAvatar();
     dirty = true;
-    status("头像已加入当前编辑内容。");
+    status("Profile photo added to your draft.");
   } catch (error) {
     status(error.message, true);
   } finally {
@@ -279,7 +279,7 @@ byId("avatar-file").addEventListener("change", async (event) => {
 byId("preview").addEventListener("click", () => {
   if (!form.reportValidity()) return;
   try {
-    if (!saveDraft(collect())) throw new Error("浏览器无法保存草稿，请检查站点存储是否可用。");
+    if (!saveDraft(collect())) throw new Error("Your browser could not save the draft. Check whether site storage is enabled.");
     dirty = false;
     tokenInput.value = "";
     location.assign("../?preview=draft");
@@ -289,9 +289,9 @@ byId("preview").addEventListener("click", () => {
 });
 
 byId("reload").addEventListener("click", async () => {
-  if (!window.confirm("用 GitHub 最新版替换当前编辑内容和本地草稿？")) return;
+  if (!window.confirm("Replace your current edits and local draft with the latest version from GitHub?")) return;
   controls(true);
-  status("正在读取 GitHub 最新版…");
+  status("Loading the latest version from GitHub…");
   const token = tokenInput.value.trim();
   tokenInput.value = "";
   try {
@@ -299,7 +299,7 @@ byId("reload").addEventListener("click", async () => {
     baseSha = sha;
     fill(data);
     try { localStorage.removeItem(draftKey); } catch { /* Storage may be unavailable. */ }
-    status("已载入 GitHub 最新版。");
+    status("Loaded the latest version from GitHub.");
   } catch (error) {
     status(error.message, true);
   } finally {
@@ -311,7 +311,7 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const token = tokenInput.value.trim();
   if (!token) {
-    status("请先填写 GitHub 访问令牌。", true);
+    status("Enter a GitHub access token to publish.", true);
     tokenInput.focus();
     return;
   }
@@ -320,7 +320,7 @@ form.addEventListener("submit", async (event) => {
   try {
     data = collect();
     bytes = encoder.encode(JSON.stringify(data, null, 2) + "\n");
-    if (bytes.length > maxContentBytes) throw new Error("资料超过发布大小限制，请缩减内容后再试。");
+    if (bytes.length > maxContentBytes) throw new Error("The content exceeds the publishing size limit. Shorten it and try again.");
   } catch (error) {
     status(error.message, true);
     return;
@@ -328,14 +328,14 @@ form.addEventListener("submit", async (event) => {
   tokenInput.value = "";
   controls(true);
   if (saveDraft(data)) dirty = false;
-  status("正在向 GitHub 发布…");
+  status("Publishing to GitHub…");
   try {
     const current = await remoteContent(token);
     const content = toBase64(bytes);
     if (current.raw === new TextDecoder().decode(bytes)) {
       baseSha = current.sha;
     } else {
-      if (current.sha !== baseSha) throw new Error("GitHub 上已有更新，当前草稿未覆盖它。可先复制草稿，再加载 GitHub 最新版。");
+      if (current.sha !== baseSha) throw new Error("The content changed on GitHub. Copy any draft changes you want to keep, then load the latest version.");
       const updated = await github({
         token,
         body: { branch, sha: current.sha, message: "Update academic profile", content }
@@ -344,7 +344,7 @@ form.addEventListener("submit", async (event) => {
     }
     try { localStorage.removeItem(draftKey); } catch { /* Storage may be unavailable. */ }
     dirty = false;
-    status("资料已保存到 GitHub。GitHub Pages 部署完成后，访客即可看到更新。");
+    status("Saved to GitHub. The update will appear once GitHub Pages finishes deploying.");
   } catch (error) {
     status(error.message, true);
   } finally {

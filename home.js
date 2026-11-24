@@ -1,4 +1,4 @@
-import { avatarLink, contentUrl, element, readDraft, requestContent, safeLink } from "./data.js";
+import { avatarLink, contentUrl, element, readDraft, requestContent, safeLink } from "./data.js?v=3";
 
 const byId = (id) => document.getElementById(id);
 const image = byId("avatar");
@@ -20,9 +20,9 @@ function renderProfile(profile) {
   setText("name", name);
   setText("footer-name", name);
   setText("initials", Array.from(name)[0].toUpperCase());
-  document.title = `${name} · 学术主页`;
+  document.title = `${name} · Academic Homepage`;
   const avatar = avatarLink(profile.avatar || "");
-  image.alt = `${name} 的头像`;
+  image.alt = `Profile photo of ${name}`;
   image.hidden = !avatar;
   if (avatar) {
     if (image.getAttribute("src") !== avatar) image.src = avatar;
@@ -35,12 +35,12 @@ function renderProfile(profile) {
 
   const links = [["GitHub", safeLink(profile.github)], ["Google Scholar", safeLink(profile.scholar)], ["ORCID", safeLink(profile.orcid)]];
   if (/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(profile.email || "")) {
-    links.unshift(["邮箱", `mailto:${encodeURIComponent(profile.email).replace("%40", "@")}`]);
+    links.unshift(["Email", `mailto:${encodeURIComponent(profile.email).replace("%40", "@")}`]);
   }
   byId("contacts").replaceChildren(...links.filter(([, url]) => url).map(([label, url]) => link(label, url)));
   byId("contacts").hidden = !byId("contacts").childElementCount;
 
-  setText("bio", profile.bio || "个人简介待补充。");
+  setText("bio", profile.bio || "No biography has been added.");
   byId("bio").classList.toggle("empty", !profile.bio);
   const topics = profile.interests || [];
   byId("topics").replaceChildren(...topics.map((topic) => element("li", topic)));
@@ -54,7 +54,7 @@ function row(title, metadata, detail, url) {
   if (metadata) item.append(element("p", metadata));
   if (detail) item.append(element("p", detail, "detail"));
   if (url) {
-    const resource = link("论文链接", url);
+    const resource = link("View publication", url);
     resource.className = "resource";
     item.append(resource);
   }
@@ -79,7 +79,7 @@ function renderPublications(items) {
     });
     showList("publication-list", matching.map((item) => row(item.title, item.authors,
       [item.venue, item.year].filter(Boolean).join(" · "), safeLink(item.url))),
-    sorted.length ? "没有符合条件的论文。" : "发表论文待补充。");
+    sorted.length ? "No publications match your search." : "No publications have been added.");
   }
   search.addEventListener("input", draw);
   draw();
@@ -98,12 +98,12 @@ async function load() {
   data ??= await requestContent(contentUrl);
   renderProfile(data.profile);
   showList("education-list", data.education.map((item) => row(item.school,
-    [item.degree, item.field, item.period].filter(Boolean).join(" · "), item.details)), "教育经历待补充。");
+    [item.degree, item.field, item.period].filter(Boolean).join(" · "), item.details)), "No education entries have been added.");
   renderPublications(data.publications);
 }
 
 load().catch(() => {
   const message = byId("load-message");
-  message.textContent = "暂时无法加载主页资料，请稍后刷新。";
+  message.textContent = "Could not load the homepage content. Refresh the page to try again.";
   message.hidden = false;
 });
