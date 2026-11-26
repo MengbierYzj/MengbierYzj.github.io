@@ -46,10 +46,19 @@ function renderProfile(profile) {
   byId("research").hidden = !topics.length;
 }
 
-function row(title, metadata, detail, url) {
+function row(title, metadata, detail, url, preview) {
   const item = element("li", "", "entry");
   const heading = element("h3", title);
   item.append(heading);
+  const src = avatarLink(preview || "");
+  if (src) {
+    const thumbnail = element("img", "", "publication-thumbnail");
+    thumbnail.src = src;
+    thumbnail.alt = `Preview of ${title}`;
+    thumbnail.loading = "lazy";
+    thumbnail.addEventListener("error", () => { thumbnail.hidden = true; });
+    item.append(thumbnail);
+  }
   if (metadata) item.append(element("p", metadata));
   if (detail) item.append(element("p", detail, "detail"));
   if (url) {
@@ -77,7 +86,7 @@ function renderPublications(items) {
       return keywords.every((term) => text.includes(term));
     });
     showList("publication-list", matching.map((item) => row(item.title, item.authors,
-      [item.venue, item.year].filter(Boolean).join(" · "), safeLink(item.url))),
+      [item.venue, item.year].filter(Boolean).join(" · "), safeLink(item.url), item.image)),
     sorted.length ? "No publications match your search." : "No publications have been added.");
   }
   search.addEventListener("input", draw);

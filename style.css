@@ -7,6 +7,11 @@
   --bluebar: linear-gradient(#f1f6fa, #d8e4ee);
   font: 16px/1.5 Verdana, Arial, "Microsoft YaHei", sans-serif;
 }
+.publication-image-editor { display: grid; gap: .6rem; margin-top: .85rem; }
+.publication-image-preview { display: block; max-width: 100%; width: 240px; max-height: 180px; object-fit: contain; border: 1px solid #a7b5c2; background: white; }
+.publication-image-editor input[type="file"] { max-width: 100%; }
+.publication-image-editor button { justify-self: start; }
+.publication-thumbnail { display: block; width: auto; max-width: 100%; max-height: 220px; margin: .7rem 0; border: 1px solid #a9b096; padding: 4px; background: white; object-fit: contain; }
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body {

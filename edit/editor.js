@@ -75,8 +75,72 @@ function addRow(section, values = {}) {
     fields.append(createField(definition, values[definition[0]])[0]);
   }
   card.append(heading, fields);
+  if (section === "publications") card.append(publicationImage(values.image));
   byId(section).append(card);
   return card;
+}
+
+function publicationImage(value = "") {
+  const container = element("div", "", "publication-image-editor");
+  const stored = document.createElement("input");
+  stored.type = "hidden";
+  stored.dataset.key = "image";
+  stored.value = avatarLink(value);
+  const preview = element("img", "", "publication-image-preview");
+  preview.alt = "Publication preview";
+  const label = element("label", "Upload preview image", "field");
+  const upload = document.createElement("input");
+  upload.type = "file";
+  upload.accept = "image/jpeg,image/png,image/webp";
+  label.append(upload);
+  const remove = element("button", "Remove preview image", "remove");
+  remove.type = "button";
+  function refresh() {
+    preview.hidden = remove.hidden = !stored.value;
+    if (stored.value) preview.src = stored.value;
+    else preview.removeAttribute("src");
+  }
+  preview.addEventListener("error", () => { preview.hidden = true; });
+  remove.addEventListener("click", () => {
+    stored.value = "";
+    refresh();
+    dirty = true;
+    upload.focus();
+  });
+  upload.addEventListener("change", async () => {
+    const [file] = upload.files;
+    if (!file) return;
+    controls(true);
+    try {
+      if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 12_000_000) {
+        throw new Error("Choose a JPEG, PNG, or WebP image up to 12 MB.");
+      }
+      const bitmap = await createImageBitmap(file);
+      try {
+        const scale = Math.min(1, 800 / bitmap.width, 600 / bitmap.height);
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+        canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+        canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        const image = canvas.toDataURL("image/webp", 0.8);
+        if (image.length > 160_000) throw new Error("This preview is too large. Choose a smaller or simpler image.");
+        stored.value = image;
+      } finally {
+        bitmap.close();
+      }
+      refresh();
+      dirty = true;
+      status("Publication preview added to your draft.");
+    } catch (error) {
+      status(error.message || "Could not read the image. Choose another file.", true);
+    } finally {
+      upload.value = "";
+      controls(false);
+    }
+  });
+  refresh();
+  container.append(stored, preview, label, remove);
+  return container;
 }
 
 function updateAvatar() {
