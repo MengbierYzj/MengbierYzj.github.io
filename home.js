@@ -1,4 +1,11 @@
-import { avatarLink, contentUrl, element, readDraft, requestContent, safeLink } from "./data.js?v=3";
+import { avatarLink, contentUrl, element as plainElement, readDraft, requestContent, safeLink } from "./data.js?v=3";
+import { formattedText } from "./rich-text.js";
+
+function element(tag, text, className) {
+  const node = plainElement(tag, "", className);
+  if (text) node.append(formattedText(text));
+  return node;
+}
 
 const byId = (id) => document.getElementById(id);
 const image = byId("avatar");
@@ -6,7 +13,7 @@ image.addEventListener("error", () => { image.hidden = true; });
 if (image.complete && !image.naturalWidth) image.hidden = true;
 
 function setText(id, value) {
-  byId(id).textContent = value;
+  byId(id).replaceChildren(formattedText(value));
 }
 
 function link(text, href) {
@@ -22,7 +29,7 @@ function renderProfile(profile) {
   setText("initials", Array.from(name)[0].toUpperCase());
   setText("site-title", name);
   setText("header-email", profile.email || "");
-  document.title = name;
+  document.title = byId("site-title").textContent;
   const avatar = avatarLink(profile.avatar || "");
   image.alt = `Profile photo of ${name}`;
   image.hidden = !avatar;
