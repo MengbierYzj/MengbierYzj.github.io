@@ -20,7 +20,8 @@ function renderProfile(profile) {
   setText("name", name);
   setText("footer-name", name);
   setText("initials", Array.from(name)[0].toUpperCase());
-  document.title = `${name} · Academic Homepage`;
+  setText("site-title", name);
+  document.title = name;
   const avatar = avatarLink(profile.avatar || "");
   image.alt = `Profile photo of ${name}`;
   image.hidden = !avatar;
