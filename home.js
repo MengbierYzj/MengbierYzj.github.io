@@ -21,6 +21,7 @@ function renderProfile(profile) {
   setText("footer-name", name);
   setText("initials", Array.from(name)[0].toUpperCase());
   setText("site-title", name);
+  setText("header-email", profile.email || "");
   document.title = name;
   const avatar = avatarLink(profile.avatar || "");
   image.alt = `Profile photo of ${name}`;
@@ -35,9 +36,6 @@ function renderProfile(profile) {
   byId("affiliation").hidden = !affiliation;
 
   const links = [["GitHub", safeLink(profile.github)], ["Google Scholar", safeLink(profile.scholar)], ["ORCID", safeLink(profile.orcid)]];
-  if (/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(profile.email || "")) {
-    links.unshift(["Email", `mailto:${encodeURIComponent(profile.email).replace("%40", "@")}`]);
-  }
   byId("contacts").replaceChildren(...links.filter(([, url]) => url).map(([label, url]) => link(label, url)));
   byId("contacts").hidden = !byId("contacts").childElementCount;
 
