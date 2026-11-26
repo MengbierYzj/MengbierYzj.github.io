@@ -7,15 +7,17 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Academic Homepage</title>
   <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="legacy/template.css">
   <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="legacy/adaptation.css">
   <script type="module" src="home.js?v=3"></script>
 </head>
 <body id="top">
   <a class="skip" href="#main">Skip to main content</a>
-  <div class="site-frame">
+  <div class="site-frame" id="wrapper">
     <header class="site-header">
-      <div class="masthead">
-        <a class="brand" href="./">Academic Homepage</a>
+      <div class="masthead" id="header">
+        <div id="logo"><h1><a class="brand" href="./">Academic Homepage</a></h1></div>
       </div>
       <nav class="site-nav" aria-label="Main navigation">
         <a href="./" aria-current="page">Home</a><a href="#about">About</a><a href="#education">Education</a><a href="#publications">Publications</a>
@@ -24,8 +26,8 @@
     <main id="main" class="home">
       <div id="preview-note" class="notice" hidden>You are previewing a local draft.<a href="./">View public homepage</a></div>
       <p id="load-message" role="status" hidden></p>
-      <div class="home-layout">
-        <div class="profile">
+      <div class="home-layout" id="page"><div id="page-bgtop"><div id="page-bgbtm">
+        <div class="profile" id="sidebar">
           <div class="profile-label">Profile</div>
           <div class="profile-body">
             <div class="portrait">
@@ -37,19 +39,19 @@
             <div id="contacts" class="links"><a href="https://github.com/MengbierYzj">GitHub</a></div>
           </div>
         </div>
-        <div class="main-column">
-          <section id="about" class="content-section" aria-labelledby="about-heading">
+        <div class="main-column" id="content">
+          <section id="about" class="content-section post" aria-labelledby="about-heading">
             <div class="section-title"><h2 id="about-heading">About</h2></div>
             <div class="section-body">
               <p id="bio" class="bio empty">No biography has been added.</p>
               <div id="research" hidden><h3>Research Interests</h3><ul id="topics" class="topics"></ul></div>
             </div>
           </section>
-          <section id="education" class="content-section" aria-labelledby="education-heading">
+          <section id="education" class="content-section post" aria-labelledby="education-heading">
             <div class="section-title"><h2 id="education-heading">Education</h2></div>
             <div id="education-list" class="section-body"><p class="empty">No education entries have been added.</p></div>
           </section>
-          <section id="publications" class="content-section" aria-labelledby="publications-heading">
+          <section id="publications" class="content-section post" aria-labelledby="publications-heading">
             <div class="section-title"><h2 id="publications-heading">Publications</h2></div>
             <div class="section-body">
               <div id="publication-tools" class="publication-tools" hidden>
@@ -60,11 +62,11 @@
             </div>
           </section>
         </div>
-      </div>
+      </div></div></div>
     </main>
     <footer class="site-footer">
       <span>© <span id="footer-name">MengbierYzj</span></span>
-      <div class="footer-links"><a href="#top">Back to top</a><a href="edit/">Edit homepage</a></div>
+      <div class="footer-links"><a href="#top">Back to top</a><a href="edit/">Edit homepage</a><a href="https://p1.resource.cx/">Template by Free CSS Templates</a> · <a href="https://creativecommons.org/licenses/by/2.5/">CC BY 2.5</a></div>
     </footer>
   </div>
 </body>

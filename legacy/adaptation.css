@@ -1,0 +1,34 @@
+/* Adaptation of the Free CSS Templates design preserved at p1.resource.cx.
+   Original template: legacy/template.css, CC BY 2.5. */
+body { background: #415b62; font-size: 16px; }
+.site-frame { width: min(100%, 1000px); padding: 0; border: 0; box-shadow: none; background: transparent; }
+#header { width: 100%; height: 128px; padding: 0 30px; }
+#logo h1 { padding-top: 20px; font-size: 2.5em; }
+.site-nav { background: #e6e4e0; border: 0; }
+.home { padding: 0; }
+.home-layout { display: block; }
+#page { width: 100%; }
+#page-bgbtm { display: flow-root; padding-bottom: 20px; }
+#content { float: left; width: 67.6%; }
+#sidebar { float: right; width: 29.6%; margin: 0; padding: 0 14px 0 0; border: 0; }
+.profile-label { background: #f6f6f6; color: #696969; box-shadow: none; border: 0; }
+.profile-body { background: white; }
+.profile h1 { font-size: 1.3rem; color: #3e3530; }
+.post { padding-top: 20px; margin: 0; }
+.section-title { margin: 0; padding: 10px 40px 0; border: 0; background: transparent; box-shadow: none; }
+.section-title h2 { font-size: 2rem; font-weight: normal; color: #0a7a98; letter-spacing: -1px; }
+.section-body { margin: 0; padding: 10px 40px 20px; border: 0; color: #3e3530; }
+.section-body a, .profile a { color: #0a607b; text-decoration: underline; }
+.site-footer { background: transparent; color: #fff; border: 0; }
+.site-footer a, .site-footer a:visited { color: #fff; }
+.site-nav a, .site-nav a:visited { font-size: .875rem; }
+@media (max-width: 700px) {
+  body { padding: .5rem; }
+  #header { height: auto; min-height: 110px; }
+  #logo h1 { font-size: 2em; }
+  #page, #page-bgtop, #page-bgbtm { background: #fff; }
+  #content, #sidebar { float: none; width: 100%; }
+  #sidebar { padding: 15px; }
+  .section-title { padding-inline: 20px; }
+  .section-body { padding-inline: 20px; }
+}
