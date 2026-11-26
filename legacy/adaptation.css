@@ -94,10 +94,10 @@ body {
 #sidebar #affiliation { margin-top: 8px; padding: 0; text-align: center; font: .9375rem/1.5 Georgia, "Times New Roman", serif; color: #404b3e; }
 .links { border-top: 1px dotted #929d7f; font: .9375rem/1.5 Georgia, "Times New Roman", serif; }
 #sidebar a { color: #174c6c; text-decoration: underline; }
-.directory, .site-tools { border-top: 3px double #a6ad92; }
-.directory a, .site-tools a { display: block; padding: 8px 10px; font-size: .9375rem; border-bottom: 1px dotted #b5b99e; }
+.directory { border-top: 3px double #a6ad92; }
+.directory a { display: block; padding: 8px 10px; font-size: .9375rem; border-bottom: 1px dotted #b5b99e; }
 .directory a::before { content: "▪ "; color: #748349; }
-.site-tools a:last-child, .directory a:last-child { border-bottom: 0; }
+.directory a:last-child { border-bottom: 0; }
 .post { padding-top: 0; margin-bottom: 20px; border: 1px solid #a9b096; background: #fffdf0; box-shadow: 2px 2px #d4d4ba; }
 .post:last-child { margin-bottom: 0; }
 .section-title { padding: 7px 12px; border-bottom: 3px double #afb79d; background: #e1e5cf; }
