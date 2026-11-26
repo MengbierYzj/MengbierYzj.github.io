@@ -9,7 +9,7 @@
   <title>Edit Academic Homepage</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="../style.css?v=4">
-  <script type="module" src="editor.js?v=4"></script>
+  <script type="module" src="editor.js?v=5"></script>
 </head>
 <body>
   <div class="site-frame">
@@ -28,6 +28,14 @@
       </div>
       <form id="editor" autocomplete="off">
         <fieldset id="editor-fields" disabled>
+          <section class="panel" aria-labelledby="news-heading">
+            <div class="panel-head"><h2 id="news-heading">News</h2><button type="button" data-add="news">Add News Item</button></div>
+            <div id="news"></div>
+          </section>
+          <section class="panel" aria-labelledby="activities-heading">
+            <div class="panel-head"><h2 id="activities-heading">Talks / Teaching / Service</h2><button type="button" data-add="activities">Add Entry</button></div>
+            <div id="activities"></div>
+          </section>
           <section class="panel" aria-labelledby="profile-heading">
             <h2 id="profile-heading">Profile</h2>
             <div id="profile-fields" class="fields">

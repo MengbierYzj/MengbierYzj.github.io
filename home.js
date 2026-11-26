@@ -108,6 +108,10 @@ async function load() {
   showList("education-list", data.education.map((item) => row(item.school,
     [item.degree, item.field, item.period].filter(Boolean).join(" · "), item.details)), "No education entries have been added.");
   renderPublications(data.publications);
+  for (const section of ["news", "activities"]) {
+    showList(`${section}-list`, (data[section] || []).map((item) =>
+      row(item.title, item.period, item.details)), "No entries have been added.");
+  }
 }
 
 load().catch(() => {

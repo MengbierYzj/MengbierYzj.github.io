@@ -20,6 +20,16 @@ export const profileFields = [
 ];
 
 export const entryFields = {
+  news: [
+    ["title", "Headline", "text", true, 500],
+    ["period", "Date", "text", false, 80],
+    ["details", "Details", "textarea", false, 1500]
+  ],
+  activities: [
+    ["title", "Talk, teaching, or service", "text", true, 500],
+    ["period", "Date and location", "text", false, 200],
+    ["details", "Details", "textarea", false, 1500]
+  ],
   education: [
     ["school", "School or university", "text", true, 160],
     ["degree", "Degree", "text", false, 100],

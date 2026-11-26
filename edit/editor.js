@@ -1,7 +1,7 @@
 import {
   apiUrl, avatarLink, branch, contentUrl, draftKey, element, entryFields,
   maxContentBytes, profileFields, readDraft, safeLink
-} from "../data.js?v=3";
+} from "../data.js?v=4";
 
 const byId = (id) => document.getElementById(id);
 const form = byId("editor");
@@ -9,7 +9,7 @@ const fieldset = byId("editor-fields");
 const tokenInput = byId("token");
 const profile = {};
 const encoder = new TextEncoder();
-const labels = { education: "Education entry", publications: "Publication" };
+const labels = { education: "Education entry", publications: "Publication", news: "News item", activities: "Talk, teaching, or service" };
 let baseSha;
 let avatarData = "";
 let dirty = false;
@@ -164,7 +164,7 @@ function fill(data) {
 
   for (const section of Object.keys(entryFields)) {
     byId(section).replaceChildren();
-    for (const row of data[section]) addRow(section, row);
+    for (const row of data[section] || []) addRow(section, row);
   }
   dirty = false;
 }
